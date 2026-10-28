@@ -17,15 +17,13 @@ export const profile = {
   github: "",
   resumePath: "/manan-mandaliya-resume.pdf",
   // Portrait for the hero (file in /public). Empty = a monogram card is shown instead.
-  photo: "/me-transparent.png",
-  tagline: "Frontends enterprise teams ship on",
+  photo: "/me.webp",
   // Optional booking link (Calendly, Cal.com, Google Calendar). When set, /contact shows a
   // "Schedule a call" card.
   schedulingUrl: "https://calendly.com/mandaliyamanan/30min",
   headline: "I architect the frontends enterprise SaaS teams ship on.",
   summary:
-    "Full stack engineer with 5+ years of experience. I work in React and TypeScript on permission-heavy HR platforms, AI-streaming analytics tools and Web3 apps, and I write the Node.js and MongoDB backend they need.",
-  status: "Open to conversations",
+    "Full Stack Engineer with 5+ years of experience building scalable web applications across enterprise HR platforms, AI-powered analytics, and Web3 ecosystems. Specialized in React and TypeScript, with experience developing Node.js and MongoDB backends to deliver secure, high-performance, end-to-end solutions.",
 } as const;
 
 // The resume says "6+" in Experience and "nine" in Projects. Pick one and use it everywhere.

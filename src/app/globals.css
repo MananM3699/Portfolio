@@ -5,70 +5,54 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /*
- * Glass design system.
- * - shadcn semantic tokens (background, card, primary, muted, accent, …) drive shadcn/ui components.
- * - "brand" is the single indigo accent for links, active and live state. (shadcn's "accent" is
- *   its subtle hover surface, so the brand colour lives under its own name.)
- * - Surfaces are translucent; the `glass` utilities add blur, a light edge and depth on top of
- *   the fixed colour field painted behind <body>.
+ * Design system: editorial dark.
+ *  - Warm near-black ground, warm off-white ink, ONE accent (vermilion).
+ *  - Flat surfaces separated by hairline rules. No blur, gradients or glow.
+ *  - Display sans (Space Grotesk) for headings, sans (Inter) for text,
+ *    mono (JetBrains Mono) for small data only: labels, numbers, code.
+ *  - Small radii (2–6px). Sections are numbered and ruled.
+ * shadcn's "accent" token is its hover surface; the site accent is `brand`.
  */
-/* Dark-only site. <html> is rendered with data-theme="dark" so shadcn's dark: variants apply. */
 :root {
-  --background: #07070c;
-  --foreground: #f4f4f6;
+  --background: #0e0d0c;
+  --foreground: #ece7df;
 
-  --card: rgb(255 255 255 / 0.055);
+  --card: #151413;
   --card-foreground: var(--foreground);
-  --popover: rgb(18 18 28 / 0.92);
+  --popover: #1a1917;
   --popover-foreground: var(--foreground);
-  --surface: rgb(255 255 255 / 0.035);
+  --surface: #121110;
 
-  --primary: #818cf8;
-  --primary-foreground: #0b0b14;
-  --secondary: rgb(255 255 255 / 0.08);
+  --primary: #ece7df;
+  --primary-foreground: #0e0d0c;
+  --secondary: #1c1b19;
   --secondary-foreground: var(--foreground);
-  --muted: rgb(255 255 255 / 0.05);
-  --muted-foreground: #b4b4c0;
-  --subtle-foreground: #8e8e9c;
-  --accent: rgb(129 140 248 / 0.12);
-  --accent-foreground: #e0e7ff;
+  --muted: #1a1917;
+  --muted-foreground: #a8a299;
+  --subtle-foreground: #75706a;
+  --accent: #1f1d1b;
+  --accent-foreground: var(--foreground);
 
-  --brand: #818cf8;
-  --brand-foreground: #0b0b14;
-  --brand-soft: rgb(129 140 248 / 0.14);
-  /* Primary call-to-action fill: deeper than --brand so white text keeps strong contrast. */
-  --cta-from: #4f46e5;
-  --cta-to: #7c3aed;
+  /* The single accent: links, active state, primary action. */
+  --brand: #ff5a36;
+  --brand-foreground: #0e0d0c;
+  --brand-soft: rgb(255 90 54 / 0.12);
 
-  --success: #4ade80;
-  --success-soft: rgb(74 222 128 / 0.12);
-  --warning: #fbbf24;
-  --warning-soft: rgb(251 191 36 / 0.12);
-  --danger: #f87171;
-  --danger-soft: rgb(248 113 113 / 0.12);
+  --success: #8fbf7f;
+  --success-soft: rgb(143 191 127 / 0.12);
+  --warning: #d9b45f;
+  --warning-soft: rgb(217 180 95 / 0.12);
+  --danger: #e07a6b;
+  --danger-soft: rgb(224 122 107 / 0.12);
   --destructive: var(--danger);
 
-  --border: rgb(255 255 255 / 0.08);
-  --border-strong: rgb(255 255 255 / 0.16);
-  --input: rgb(255 255 255 / 0.14);
-  --ring: #a5b4fc;
+  --border: rgb(236 231 223 / 0.12);
+  --border-strong: rgb(236 231 223 / 0.26);
+  --input: rgb(236 231 223 / 0.18);
+  --ring: #ff5a36;
 
-  --glass-border: rgb(255 255 255 / 0.1);
-  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 0.07);
-  --glass-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 48px -16px rgb(0 0 0 / 0.6);
 
-  --field-1: rgb(79 70 229 / 0.45);
-  --field-2: rgb(147 51 234 / 0.32);
-  --field-3: rgb(6 182 212 / 0.22);
-  --field-4: rgb(236 72 153 / 0.14);
-
-  --chart-1: #818cf8;
-  --chart-2: #38bdf8;
-  --chart-3: #c084fc;
-  --chart-4: #2dd4bf;
-  --chart-5: #fbbf24;
-
-  --radius: 0.75rem;
+  --radius: 0.25rem;
   color-scheme: dark;
 }
 
@@ -92,8 +76,6 @@
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
   --color-brand-soft: var(--brand-soft);
-  --color-cta-from: var(--cta-from);
-  --color-cta-to: var(--cta-to);
   --color-success: var(--success);
   --color-success-soft: var(--success-soft);
   --color-warning: var(--warning);
@@ -105,54 +87,20 @@
   --color-border-strong: var(--border-strong);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
+
   --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-code), ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-heading: var(--font-body), ui-sans-serif, system-ui, sans-serif;
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
-}
+  --font-heading: var(--font-display), ui-sans-serif, system-ui, sans-serif;
 
-/* Frosted panel: the default container for cards, frames and callouts. */
-@utility glass {
-  background-color: var(--card);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow), var(--glass-highlight);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-}
-
-/* Lighter frosting for nested or small elements (chips, inputs, inner tiles). No blur, so it
-   stays cheap when many are on screen. */
-@utility glass-subtle {
-  background-color: var(--surface);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-highlight);
-}
-
-/* Sticky chrome (header) gets a denser tint so text underneath never competes. */
-@utility glass-bar {
-  background-color: color-mix(in oklab, var(--background) 70%, transparent);
-  border-bottom: 1px solid var(--glass-border);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-}
-
-/* Brand gradient text for the occasional emphasised word. */
-@utility text-gradient {
-  background-image: linear-gradient(110deg, var(--brand), var(--chart-3) 55%, var(--chart-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  /* Deliberately small: every rounded-* in the codebase now resolves to a tight radius. */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 5px;
+  --radius-2xl: 6px;
+  --radius-3xl: 8px;
+  --radius-4xl: 10px;
 }
 
 @layer base {
@@ -163,6 +111,7 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
+    font-synthesis: none;
   }
 
   body {
@@ -170,24 +119,14 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Fixed colour field behind every page; the glass surfaces blur it. Static gradients only,
-     so it costs one paint and nothing per frame. */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background:
-      radial-gradient(52rem 40rem at 6% -8%, var(--field-1), transparent 68%),
-      radial-gradient(44rem 36rem at 98% 6%, var(--field-2), transparent 68%),
-      radial-gradient(48rem 40rem at 72% 106%, var(--field-3), transparent 68%),
-      radial-gradient(36rem 30rem at -4% 78%, var(--field-4), transparent 68%),
-      radial-gradient(30rem 26rem at 50% 50%, var(--field-3), transparent 75%);
-    opacity: 0.9;
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.03em;
   }
 
-  /* JetBrains Mono ligatures turn "->" and "=>" into single glyphs; keep labels and code literal. */
   .font-mono,
   code,
   pre,
@@ -218,13 +157,6 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-}
-
-@media (prefers-reduced-transparency: reduce) {
-  :root {
-    --card: rgb(22 22 30 / 0.97);
-    --surface: rgb(16 16 22 / 0.97);
   }
 }
 
@@ -264,7 +196,7 @@
   font-size: 0.875em;
   background: var(--muted);
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 2px;
   padding: 0.1em 0.35em;
   color: var(--foreground);
 }
@@ -277,15 +209,6 @@
 
 .caret {
   animation: caret-blink 1s step-end infinite;
-}
-
-/* Faint engineering grid, faded out toward the edges. Used behind the hero only. */
-@utility bg-grid {
-  background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse 85% 80% at 50% 40%, #000 45%, transparent 100%);
 }
 
 /* Tech marquee: each track holds two copies of its list and slides by exactly one copy. */

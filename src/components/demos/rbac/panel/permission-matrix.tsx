@@ -4,7 +4,7 @@ import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { appButtonSkin, headCellClass, headRowClass, paneClass } from "../app/ui";
 import {
   defaultRolePermissions,

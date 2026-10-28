@@ -1,24 +1,18 @@
 "use client";
 
-import { Check, Copy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
 type CopyState = "idle" | "copied" | "error";
 
-/** Visible email address plus a copy button. The status text is announced politely. */
+/** Email as plain mono text with a quiet "Copy" action. The result is announced politely. */
 export function CopyEmail({ email, className }: { email: string; className?: string }) {
   const [state, setState] = useState<CopyState>("idle");
-  const [tipOpen, setTipOpen] = useState(false);
   const timer = useRef<number | undefined>(undefined);
 
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
   async function copy() {
-    // Radix closes the tooltip on pointerdown; reopen it so "Copied" is visible.
-    setTipOpen(true);
     try {
       await navigator.clipboard.writeText(email);
       setState("copied");
@@ -30,40 +24,24 @@ export function CopyEmail({ email, className }: { email: string; className?: str
   }
 
   return (
-    <div className={cn("flex flex-wrap items-center gap-x-2 gap-y-1", className)}>
-      <div className="glass-subtle inline-flex min-w-0 items-center rounded-xl p-0.5 backdrop-blur-md">
-        <a
-          href={`mailto:${email}`}
-          className="min-w-0 truncate rounded-l-[0.6rem] px-2.5 py-1.5 font-mono text-[0.78rem] text-foreground sm:px-3 sm:text-sm transition-colors duration-150 hover:text-brand"
-        >
-          {email}
-        </a>
-        <Tooltip open={tipOpen} onOpenChange={setTipOpen}>
-          <TooltipTrigger asChild>
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              onClick={copy}
-              aria-label="Copy email address"
-              className="rounded-[0.6rem] text-muted-foreground hover:bg-brand-soft hover:text-brand"
-            >
-              {state === "copied" ? (
-                <Check className="size-4 text-brand" aria-hidden />
-              ) : (
-                <Copy className="size-4" aria-hidden />
-              )}
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="top" sideOffset={6}>
-            {state === "copied" ? "Copied" : "Copy email"}
-          </TooltipContent>
-        </Tooltip>
-      </div>
-      <span role="status" aria-live="polite" className="font-mono text-xs text-muted-foreground">
-        {state === "copied" && "Copied to clipboard"}
-        {state === "error" && "Couldn't copy. Select the address instead."}
+    <span className={cn("inline-flex flex-wrap items-baseline gap-x-3", className)}>
+      <a
+        href={`mailto:${email}`}
+        className="font-mono text-sm text-foreground underline decoration-border-strong underline-offset-4 transition-colors hover:text-brand hover:decoration-brand"
+      >
+        {email}
+      </a>
+      <button
+        type="button"
+        onClick={copy}
+        aria-label="Copy email address"
+        className="font-mono text-xs text-subtle-foreground transition-colors hover:text-brand"
+      >
+        {state === "copied" ? "Copied" : "Copy"}
+      </button>
+      <span role="status" aria-live="polite" className="sr-only">
+        {state === "copied" ? "Email copied to clipboard" : state === "error" ? "Could not copy" : ""}
       </span>
-    </div>
+    </span>
   );
 }

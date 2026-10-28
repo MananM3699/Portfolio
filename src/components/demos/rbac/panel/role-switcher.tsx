@@ -27,7 +27,7 @@ export function RoleSwitcher() {
       aria-label="View as role"
       size="sm"
       spacing={1}
-      className="glass-subtle rounded-lg p-0.5"
+      className="border border-border bg-surface rounded-lg p-0.5"
     >
       {ROLES.map((r) => (
         <ToggleGroupItem

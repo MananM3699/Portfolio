@@ -1,15 +1,16 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowLeft, ArrowRight, Check, X } from "lucide-react";
 import { getAdjacentProjects, type Project } from "@/content/projects";
 import { cn } from "@/lib/utils";
-import { Chip, Container, Eyebrow } from "../ui/primitives";
+import { Container } from "../ui/primitives";
 import { TableOfContents, type TocItem } from "./table-of-contents";
 
+const mono = "font-mono text-[0.7rem] uppercase tracking-[0.14em] text-subtle-foreground";
+
 /**
- * Page shell for /work/[slug]: header + TL;DR, a sticky TOC rail on desktop,
- * and prev/next navigation. Pages compose <CaseSection>, <Decision>, <Figure>
- * and <DemoFrame> inside it.
+ * Editorial article shell for /work/[slug]: title block, a ruled TL;DR, a sticky numbered
+ * contents column and a readable article column. Pages compose <CaseSection>, <Decision>,
+ * <Figure> and <DemoFrame> inside it.
  */
 export function CaseStudyShell({
   project,
@@ -24,48 +25,48 @@ export function CaseStudyShell({
 }) {
   return (
     <article>
-      <header className="relative">
-        <Container className="py-14 sm:py-20">
-          <Link
-            href="/#work"
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
-          >
-            <ArrowLeft className="size-4" aria-hidden /> All work
+      <header className="pt-12 pb-16 sm:pt-16">
+        <Container>
+          <Link href="/#work" className="font-mono text-xs text-subtle-foreground transition-colors hover:text-brand">
+            ← All projects
           </Link>
-          <Eyebrow className="mt-8">
+          <p className={cn(mono, "mt-12")}>
             {project.domain} · {project.org} · {project.period}
-          </Eyebrow>
-          <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+          </p>
+          <h1 className="mt-5 font-serif text-[clamp(4rem,11vw,8.5rem)] leading-[0.9] tracking-[-0.03em] text-foreground">
             {project.title}
           </h1>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+          <p className="mt-6 max-w-2xl font-serif text-[clamp(1.5rem,3vw,2.25rem)] leading-tight text-muted-foreground">
             {project.tagline}
           </p>
-          <dl className="glass mt-10 grid overflow-hidden rounded-2xl sm:grid-cols-2 lg:grid-cols-4 [&>div]:border-border sm:[&>div:nth-child(odd)]:border-r lg:[&>div]:border-r lg:[&>div:last-child]:border-r-0 [&>div]:border-b sm:[&>div:nth-last-child(-n+2)]:border-b-0 [&>div:last-child]:border-b-0">
-            {tldr.map((item) => (
-              <div key={item.label} className="p-4">
-                <dt className="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-subtle-foreground">
-                  {item.label}
-                </dt>
-                <dd className="mt-1.5 text-sm leading-relaxed text-foreground">{item.value}</dd>
+
+          <dl className="mt-14 grid border-y border-border sm:grid-cols-2 lg:grid-cols-4">
+            {tldr.map((item, i) => (
+              <div
+                key={item.label}
+                className={cn(
+                  "border-b border-border py-5 last:border-b-0 sm:px-5 lg:border-b-0",
+                  i === 0 && "sm:pl-0",
+                  i > 0 && "lg:border-l",
+                  i % 2 === 1 && "sm:border-l lg:border-l",
+                )}
+              >
+                <dt className={mono}>{item.label}</dt>
+                <dd className="mt-2 text-sm leading-relaxed text-foreground">{item.value}</dd>
               </div>
             ))}
           </dl>
-          <div className="mt-6 flex flex-wrap gap-1.5">
-            {project.stack.map((s) => (
-              <Chip key={s}>{s}</Chip>
-            ))}
-          </div>
+          <p className="mt-5 font-mono text-xs leading-relaxed text-subtle-foreground">{project.stack.join(", ")}</p>
         </Container>
       </header>
 
-      <Container className="grid gap-12 py-14 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-16">
+      <Container className="grid gap-12 pb-8 lg:grid-cols-[12rem_minmax(0,1fr)] lg:gap-16">
         <aside className="hidden lg:block">
           <div className="sticky top-24">
             <TableOfContents items={toc} />
           </div>
         </aside>
-        <div className="min-w-0 space-y-20">{children}</div>
+        <div className="min-w-0 space-y-24">{children}</div>
       </Container>
 
       <CaseStudyPager slug={project.slug} />
@@ -80,20 +81,30 @@ export function CaseSection({
   children,
 }: {
   id: string;
+  /** "01 · Overview": the number and label are split on the middle dot. */
   eyebrow?: string;
   title: string;
   children: ReactNode;
 }) {
+  const [num, ...rest] = (eyebrow ?? "").split(" · ");
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-24">
-      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-      <h2
-        id={`${id}-title`}
-        className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
-      >
+    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-24 border-t border-border-strong pt-4">
+      {eyebrow && (
+        <p className="flex items-baseline gap-3 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-subtle-foreground">
+          {rest.length > 0 ? (
+            <>
+              <span className="text-brand">{num}</span>
+              <span>{rest.join(" · ")}</span>
+            </>
+          ) : (
+            <span>{eyebrow}</span>
+          )}
+        </p>
+      )}
+      <h2 id={`${id}-title`} className="mt-6 max-w-3xl font-serif text-4xl leading-[1.05] text-balance text-foreground sm:text-5xl">
         {title}
       </h2>
-      <div className="mt-6 space-y-8">{children}</div>
+      <div className="mt-8 space-y-10">{children}</div>
     </section>
   );
 }
@@ -103,10 +114,7 @@ export function Prose({ children, className }: { children: ReactNode; className?
   return <div className={cn("prose-case max-w-[68ch]", className)}>{children}</div>;
 }
 
-/**
- * The recurring "decision record": what was chosen, what was rejected and why.
- * Gives reviewers one consistent pattern to scan in every case study.
- */
+/** A decision record: what was chosen, what was rejected, and the trade-off. Text first, ruled. */
 export function Decision({
   n,
   title,
@@ -123,34 +131,26 @@ export function Decision({
   why: ReactNode;
 }) {
   return (
-    <div className="glass max-w-[68ch] rounded-2xl">
-      <div className="flex items-baseline gap-3 border-b border-border px-5 py-4">
-        <span className="font-mono text-xs text-brand">DECISION {String(n).padStart(2, "0")}</span>
-        <h3 className="font-semibold text-foreground">{title}</h3>
-      </div>
-      <div className="space-y-4 px-5 py-5 text-[0.95rem] leading-relaxed text-muted-foreground">
-        <p>{context}</p>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <div className="rounded-xl bg-success-soft p-3.5">
-            <p className="flex items-center gap-1.5 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-success">
-              <Check className="size-3.5" aria-hidden /> Chose
-            </p>
-            <div className="mt-1.5 text-foreground">{chose}</div>
-          </div>
-          <div className="glass-subtle rounded-xl p-3.5">
-            <p className="flex items-center gap-1.5 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-subtle-foreground">
-              <X className="size-3.5" aria-hidden /> Rejected
-            </p>
-            <div className="mt-1.5">{rejected}</div>
-          </div>
+    <div className="max-w-3xl border-t border-border pt-5">
+      <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-subtle-foreground">
+        Decision <span className="text-brand">{String(n).padStart(2, "0")}</span>
+      </p>
+      <h3 className="mt-3 font-serif text-3xl leading-tight text-foreground">{title}</h3>
+      <p className="mt-4 max-w-[68ch] leading-relaxed text-muted-foreground">{context}</p>
+      <div className="mt-6 grid gap-6 sm:grid-cols-2">
+        <div>
+          <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-brand">Chose</p>
+          <div className="mt-2 text-sm leading-relaxed text-foreground">{chose}</div>
         </div>
-        <p>
-          <span className="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-foreground">
-            Trade-off ·{" "}
-          </span>
-          {why}
-        </p>
+        <div>
+          <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-subtle-foreground">Rejected</p>
+          <div className="mt-2 text-sm leading-relaxed text-muted-foreground">{rejected}</div>
+        </div>
       </div>
+      <p className="mt-6 max-w-[68ch] text-sm leading-relaxed text-muted-foreground">
+        <span className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-foreground">Trade-off · </span>
+        {why}
+      </p>
     </div>
   );
 }
@@ -166,18 +166,13 @@ export function Figure({
 }) {
   return (
     <figure className={className}>
-      <div className="glass overflow-x-auto rounded-2xl p-4 sm:p-6">{children}</div>
-      {caption && (
-        <figcaption className="mt-3 text-sm text-subtle-foreground">{caption}</figcaption>
-      )}
+      <div className="overflow-x-auto border border-border p-4 sm:p-6">{children}</div>
+      {caption && <figcaption className="mt-3 font-mono text-xs leading-relaxed text-subtle-foreground">{caption}</figcaption>}
     </figure>
   );
 }
 
-/**
- * "App window" chrome around an interactive demo, with the mandatory mock-data label
- * (the originals are proprietary).
- */
+/** Flat frame around an interactive demo: a thin top bar with the title and the mock-data note. */
 export function DemoFrame({
   title,
   note = "Recreated demo · mock data · original is proprietary",
@@ -190,27 +185,12 @@ export function DemoFrame({
   className?: string;
 }) {
   return (
-    <div
-      className={cn(
-        "glass overflow-hidden rounded-2xl",
-        className,
-      )}
-    >
-      <div className="flex items-center gap-3 border-b border-border bg-muted/60 px-4 py-2.5">
-        <div className="flex gap-1.5" aria-hidden>
-          <span className="size-2.5 rounded-full bg-[#ff5f57]/80" />
-          <span className="size-2.5 rounded-full bg-[#febc2e]/80" />
-          <span className="size-2.5 rounded-full bg-[#28c840]/80" />
-        </div>
-        <p className="truncate font-mono text-xs text-muted-foreground">{title}</p>
-        <span className="ml-auto hidden shrink-0 rounded-md bg-warning-soft px-2 py-0.5 font-mono text-[0.65rem] text-warning sm:inline">
-          {note}
-        </span>
+    <div className={cn("overflow-hidden rounded-lg border border-border-strong bg-card", className)}>
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 border-b border-border px-4 py-2.5 font-mono text-[0.7rem] text-subtle-foreground">
+        <span className="text-foreground">{title}</span>
+        <span>{note}</span>
       </div>
       <div>{children}</div>
-      <p className="border-t border-border bg-muted/60 px-4 py-2 font-mono text-[0.65rem] text-warning sm:hidden">
-        {note}
-      </p>
     </div>
   );
 }
@@ -219,7 +199,7 @@ export function DemoFrame({
 export function DemoSkeleton({ height = 480, label = "Loading demo…" }: { height?: number; label?: string }) {
   return (
     <div
-      className="glass flex animate-pulse items-center justify-center rounded-2xl font-mono text-xs text-subtle-foreground"
+      className="flex items-center justify-center rounded-lg border border-border bg-surface font-mono text-xs text-subtle-foreground"
       style={{ height }}
       role="status"
     >
@@ -231,17 +211,14 @@ export function DemoSkeleton({ height = 480, label = "Loading demo…" }: { heig
 function CaseStudyPager({ slug }: { slug: Project["slug"] }) {
   const { prev, next } = getAdjacentProjects(slug);
   return (
-    <Container>
-      <nav
-        aria-label="More case studies"
-        className="grid gap-4 border-t border-border pt-10 sm:grid-cols-2"
-      >
+    <Container className="mt-24">
+      <nav aria-label="More case studies" className="grid border-y border-border sm:grid-cols-2">
         {prev ? (
-          <Link href={`/work/${prev.slug}`} className="glass group rounded-2xl p-5 transition-transform hover:-translate-y-0.5">
-            <span className="flex items-center gap-1.5 text-xs text-subtle-foreground">
-              <ArrowLeft className="size-3.5" aria-hidden /> Previous
+          <Link href={`/work/${prev.slug}`} className="group py-8 transition-colors hover:bg-muted/40 sm:pr-8">
+            <span className="font-mono text-xs text-subtle-foreground">← Previous</span>
+            <span className="mt-2 block font-serif text-4xl text-foreground transition-colors group-hover:text-brand">
+              {prev.title}
             </span>
-            <span className="mt-1 block font-medium text-foreground">{prev.title}</span>
           </Link>
         ) : (
           <span />
@@ -249,12 +226,12 @@ function CaseStudyPager({ slug }: { slug: Project["slug"] }) {
         {next && (
           <Link
             href={`/work/${next.slug}`}
-            className="glass group rounded-2xl p-5 text-right transition-transform hover:-translate-y-0.5"
+            className="group py-8 transition-colors hover:bg-muted/40 sm:border-l sm:border-border sm:pl-8 sm:text-right"
           >
-            <span className="flex items-center justify-end gap-1.5 text-xs text-subtle-foreground">
-              Next <ArrowRight className="size-3.5" aria-hidden />
+            <span className="font-mono text-xs text-subtle-foreground">Next →</span>
+            <span className="mt-2 block font-serif text-4xl text-foreground transition-colors group-hover:text-brand">
+              {next.title}
             </span>
-            <span className="mt-1 block font-medium text-foreground">{next.title}</span>
           </Link>
         )}
       </nav>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
 export type TocItem = { id: string; label: string };
 
@@ -25,23 +25,22 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
 
   return (
     <nav aria-label="On this page">
-      <p className="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-subtle-foreground">
-        On this page
-      </p>
-      <ol className="mt-3 space-y-0.5 border-l border-border">
-        {items.map((item) => (
+      <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-subtle-foreground">Contents</p>
+      <ol className="mt-4 space-y-1 border-l border-border">
+        {items.map((item, i) => (
           <li key={item.id}>
             <a
               href={`#${item.id}`}
               aria-current={active === item.id ? "location" : undefined}
               className={cn(
-                "-ml-px block border-l py-1.5 pl-3 text-sm transition-colors",
+                "-ml-px grid grid-cols-[1.75rem_minmax(0,1fr)] border-l py-1.5 pl-3 font-mono text-xs transition-colors",
                 active === item.id
                   ? "border-brand text-foreground"
-                  : "border-transparent text-muted-foreground hover:text-foreground",
+                  : "border-transparent text-subtle-foreground hover:text-foreground",
               )}
             >
-              {item.label}
+              <span className={active === item.id ? "text-brand" : undefined}>{String(i + 1).padStart(2, "0")}</span>
+              <span>{item.label}</span>
             </a>
           </li>
         ))}

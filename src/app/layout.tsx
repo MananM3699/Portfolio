@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { profile } from "@/content/site";
 import "./globals.css";
 
-// Space Grotesk (headings + body) was drawn from Space Mono, so it shares JetBrains Mono's
-// technical character. Swap either here; globals.css only reads the CSS variables.
-const bodyFont = Space_Grotesk({
+// Space Grotesk for headings, Inter for text, mono for small data. globals.css reads the variables.
+const displayFont = Space_Grotesk({
+  variable: "--font-display",
+  subsets: ["latin"],
+});
+
+const bodyFont = Inter({
   variable: "--font-body",
   subsets: ["latin"],
 });
@@ -24,16 +28,6 @@ export const metadata: Metadata = {
     template: `%s · ${profile.name}`,
   },
   description: profile.summary,
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/icon.png", type: "image/png", sizes: "512x512" },
-    ],
-    apple: [
-      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
-    ],
-  },
   openGraph: {
     title: profile.name,
     description: profile.headline,
@@ -46,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-theme="dark"
-      className={`${bodyFont.variable} ${codeFont.variable} h-full antialiased`}
+      className={`${displayFont.variable} ${bodyFont.variable} ${codeFont.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <a

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import {
   LeaveTypeSchema,
   NewLeaveRequestSchema,
@@ -22,7 +22,7 @@ import { appButtonSkin, ErrorNote } from "./ui";
 
 type FieldErrors = Partial<Record<keyof NewLeaveRequest, string[]>>;
 
-/** Fields sit on a glass-subtle form, so they take the card tint to stay readable. */
+/** Fields sit on a border border-border bg-surface form, so they take the card tint to stay readable. */
 const inputClass = "bg-card text-foreground";
 const labelClass = "mb-1.5 text-xs text-muted-foreground";
 
@@ -77,7 +77,7 @@ export function RequestLeaveForm({ onDone }: { onDone: () => void }) {
       onSubmit={handleSubmit}
       noValidate
       aria-label="Request leave"
-      className="glass-subtle space-y-3 rounded-xl p-4"
+      className="border border-border bg-surface space-y-3 rounded-md p-4"
     >
       <div className="grid gap-3 @lg:grid-cols-3">
         <div>

@@ -5,7 +5,7 @@ import { useId } from "react";
 import { Lock, ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { appButtonSkin } from "./app/ui";
 import { hasPermission, roleMeta, type Permission } from "./model/permissions";
 import { actionBlocked, navigated } from "./store/session-slice";

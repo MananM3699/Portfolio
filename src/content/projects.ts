@@ -19,7 +19,7 @@ export type Project = {
 };
 
 // Ordered by how strongly each story supports the positioning.
-export const projects: Project[] = [
+const projects: Project[] = [
   {
     slug: "hrms",
     title: "HRMS",

@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { defaultRolePermissions, PERMISSIONS, ROLES, type Permission, type Role } from "../model/permissions";
 import { useAppSelector } from "../store/store";
 
@@ -53,7 +53,7 @@ const usage: Line[] = [
 
 function CodeBlock({ label, lines }: { label: string; lines: Line[] }) {
   return (
-    <figure className="glass-subtle overflow-hidden rounded-xl">
+    <figure className="border border-border bg-surface overflow-hidden rounded-md">
       <figcaption className="border-b border-border bg-muted/60 px-3 py-1.5 font-mono text-[0.68rem] text-muted-foreground">
         {label}
       </figcaption>

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { RefreshCw } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import type { LeaveStatus } from "../model/contracts";
 import { statusTone } from "../model/format";
 
@@ -13,7 +13,7 @@ import { statusTone } from "../model/format";
 export const appButtonSkin = {
   outline: "bg-card shadow-xs hover:bg-secondary",
   primary:
-    "bg-brand text-brand-foreground shadow-[0_6px_18px_-8px_var(--brand)] hover:bg-brand/90 hover:shadow-[0_8px_22px_-8px_var(--brand)]",
+    "bg-brand text-brand-foreground hover:bg-brand/90",
 } as const;
 
 const statusSkin: Record<(typeof statusTone)[LeaveStatus], string> = {
@@ -78,7 +78,7 @@ export function ErrorNote({ children }: { children: ReactNode }) {
 }
 
 /** Translucent frame for tables and grids inside the app pane (never a nested blur). */
-export const paneClass = "glass-subtle overflow-hidden rounded-xl";
+export const paneClass = "border border-border bg-surface overflow-hidden rounded-md";
 
 /** Header row of a data table: tinted, and no hover highlight. */
 export const headRowClass = "bg-muted/60 hover:bg-muted/60";

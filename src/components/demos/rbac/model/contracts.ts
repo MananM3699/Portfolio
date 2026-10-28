@@ -15,7 +15,7 @@ const isoDate = z.iso.date();
 export const LeaveTypeSchema = z.enum(["annual", "sick", "comp-off", "unpaid"]);
 export type LeaveType = z.infer<typeof LeaveTypeSchema>;
 
-export const LeaveStatusSchema = z.enum(["pending", "approved", "rejected"]);
+const LeaveStatusSchema = z.enum(["pending", "approved", "rejected"]);
 export type LeaveStatus = z.infer<typeof LeaveStatusSchema>;
 
 export const LeaveRequestSchema = z.object({
@@ -32,7 +32,7 @@ export const LeaveRequestSchema = z.object({
 export type LeaveRequest = z.infer<typeof LeaveRequestSchema>;
 export const LeaveListSchema = z.array(LeaveRequestSchema);
 
-export const ShiftSchema = z.enum(["early", "day", "late"]);
+const ShiftSchema = z.enum(["early", "day", "late"]);
 export type Shift = z.infer<typeof ShiftSchema>;
 
 export const TeamWeekSchema = z.object({
@@ -81,7 +81,6 @@ export const NewLeaveRequestSchema = z
   })
   .refine((v) => v.to >= v.from, { message: "End date can't be before the start date", path: ["to"] });
 export type NewLeaveRequest = z.infer<typeof NewLeaveRequestSchema>;
-export type NewLeaveRequestInput = z.input<typeof NewLeaveRequestSchema>;
 
 export const CreateLeaveRequestSchema = z.object({
   employeeId: z.string(),

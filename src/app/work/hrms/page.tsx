@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
-import { Check, Handshake, UserRound, UsersRound } from "lucide-react";
 import { CaseSection, CaseStudyShell, Decision, Figure, Prose } from "@/components/case-study/case-study";
 import { Point, PointList } from "@/components/case-study-content/point-list";
 import { CodeFigure } from "@/components/case-study-content/code-figure";
 import { HrmsArchitectureDiagram } from "@/components/case-study-content/hrms-architecture";
 import { RbacPlaygroundLazy } from "@/components/demos/rbac/lazy";
-import { Card } from "@/components/ui/primitives";
-import { Separator } from "@/components/ui/separator";
 import { getProject } from "@/content/projects";
 import { HRMS_MODULE_COUNT } from "@/content/site";
 
@@ -341,35 +338,29 @@ export default function HrmsCaseStudyPage() {
       </CaseSection>
 
       <CaseSection id="my-role" eyebrow="07 · My role" title="What I own and what I share">
-        <div className="grid max-w-[68ch] gap-4 sm:grid-cols-2">
-          <Card className="p-5">
-            <h3 className="flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-brand">
-              <UserRound className="size-3.5" aria-hidden /> I own
-            </h3>
-            <Separator className="my-4" />
-            <ul className="space-y-2.5 text-[0.95rem] leading-relaxed text-muted-foreground">
+        <div className="grid max-w-3xl gap-10 sm:grid-cols-2">
+          <div>
+            <h3 className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-brand">I own</h3>
+            <ul className="mt-3 divide-y divide-border border-y border-border text-[0.95rem] leading-relaxed text-foreground">
               {OWN.map((item) => (
-                <li key={item} className="flex gap-2.5">
-                  <Check className="mt-1 size-4 shrink-0 text-brand" aria-hidden />
+                <li key={item} className="py-3">
                   {item}
                 </li>
               ))}
             </ul>
-          </Card>
-          <Card className="p-5">
-            <h3 className="flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground">
-              <UsersRound className="size-3.5" aria-hidden /> With the team
+          </div>
+          <div>
+            <h3 className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-subtle-foreground">
+              With the team
             </h3>
-            <Separator className="my-4" />
-            <ul className="space-y-2.5 text-[0.95rem] leading-relaxed text-muted-foreground">
+            <ul className="mt-3 divide-y divide-border border-y border-border text-[0.95rem] leading-relaxed text-muted-foreground">
               {SHARED.map((item) => (
-                <li key={item} className="flex gap-2.5">
-                  <Handshake className="mt-1 size-4 shrink-0 text-subtle-foreground" aria-hidden />
+                <li key={item} className="py-3">
                   {item}
                 </li>
               ))}
             </ul>
-          </Card>
+          </div>
         </div>
         <Prose>
           <p>

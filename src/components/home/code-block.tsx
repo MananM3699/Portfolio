@@ -1,6 +1,6 @@
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
-/** Plain, unhighlighted code panel with a filename bar. Keeps the page free of client JS. */
+/** Plain, unhighlighted code panel: flat, hairline, with a thin filename bar. */
 export function CodeBlock({
   filename,
   code,
@@ -11,16 +11,11 @@ export function CodeBlock({
   className?: string;
 }) {
   return (
-    <figure className={cn("glass-subtle overflow-hidden rounded-xl", className)}>
-      <figcaption className="flex items-center gap-3 border-b border-border bg-muted/60 px-3 py-2">
-        <span className="flex gap-1.5" aria-hidden>
-          <span className="size-2 rounded-full bg-danger/60" />
-          <span className="size-2 rounded-full bg-warning/60" />
-          <span className="size-2 rounded-full bg-success/60" />
-        </span>
-        <span className="font-mono text-[0.72rem] text-muted-foreground">{filename}</span>
+    <figure className={cn("overflow-hidden rounded-md border border-border bg-surface", className)}>
+      <figcaption className="border-b border-border px-4 py-2 font-mono text-[0.7rem] text-subtle-foreground">
+        {filename}
       </figcaption>
-      <pre className="overflow-x-auto p-4 font-mono text-[0.78rem] leading-relaxed text-foreground">
+      <pre className="overflow-x-auto p-4 font-mono text-[0.8rem] leading-relaxed text-foreground">
         <code>{code.trim()}</code>
       </pre>
     </figure>

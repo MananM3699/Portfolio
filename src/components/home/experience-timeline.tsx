@@ -1,75 +1,60 @@
-import { Card, Chip, SectionHeading } from "@/components/ui/primitives";
-import { Separator } from "@/components/ui/separator";
+import { SectionHeading } from "@/components/ui/primitives";
 import { education, experience, profile } from "@/content/site";
-import { cn } from "@/lib/cn";
 import { HomeSection } from "./section";
 
 export function ExperienceTimeline() {
   return (
-    <HomeSection id="experience">
-      <SectionHeading eyebrow="Experience" title={`${profile.yearsOfExperience} years, three companies`} />
+    <HomeSection id="experience" aria-labelledby="experience-title">
+      <SectionHeading
+        index="05"
+        eyebrow="Experience"
+        title={`${profile.yearsOfExperience} years, three companies`}
+        titleId="experience-title"
+      />
 
-      <Card className="mt-12 max-w-4xl p-6 sm:p-8 lg:p-10">
-        <ol>
-          {experience.map((job, i) => {
-            const last = i === experience.length - 1;
-            return (
-              <li
-                key={`${job.company}-${job.period}`}
-                className="relative grid grid-cols-[1.25rem_minmax(0,1fr)] gap-x-4 sm:gap-x-6"
-              >
-                {/* Rail and node */}
-                <div className="relative flex justify-center" aria-hidden>
-                  {!last && (
-                    <span className="absolute bottom-0 top-7 w-px bg-gradient-to-b from-border-strong to-border" />
-                  )}
-                  <span
-                    className={cn(
-                      "relative mt-1.5 size-3 rounded-full border-2",
-                      job.current
-                        ? "border-brand bg-brand shadow-[0_0_0_4px_var(--brand-soft),0_0_14px_var(--brand)]"
-                        : "border-border-strong bg-background",
-                    )}
-                  />
-                </div>
+      <ol className="mt-14 border-t border-border">
+        {experience.map((job) => (
+          <li
+            key={`${job.company}-${job.period}`}
+            className="grid gap-x-8 gap-y-5 border-b border-border py-10 lg:grid-cols-12"
+          >
+            <div className="lg:col-span-3">
+              <p className="font-mono text-xs text-foreground">{job.period}</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {job.company} · {job.location}
+              </p>
+              {job.current && <p className="mt-3 font-mono text-xs text-brand">● Current</p>}
+            </div>
 
-                <article className={cn("min-w-0", last ? "pb-0" : "pb-10 sm:pb-12")}>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                    <h3 className="text-lg font-semibold tracking-tight text-foreground">{job.role}</h3>
-                    {job.current && <Chip tone="accent">Current</Chip>}
-                  </div>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    <span className="font-medium text-foreground">{job.company}</span> · {job.location}
-                  </p>
-                  <p className="mt-1 font-mono text-xs text-muted-foreground">{job.period}</p>
-                  <p className="mt-4 text-sm leading-relaxed text-foreground">{job.summary}</p>
-                  <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-muted-foreground marker:text-brand/60">
-                    {job.highlights.map((h) => (
-                      <li key={h}>{h}</li>
-                    ))}
-                  </ul>
-                  <ul className="mt-4 flex flex-wrap gap-1.5" aria-label={`${job.company} stack`}>
-                    {job.stack.map((item) => (
-                      <li key={item}>
-                        <Chip>{item}</Chip>
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-              </li>
-            );
-          })}
-        </ol>
+            <div className="lg:col-span-9">
+              <h3 className="font-serif text-3xl leading-tight text-foreground sm:text-4xl">{job.role}</h3>
+              <p className="mt-3 max-w-2xl text-base text-muted-foreground">{job.summary}</p>
+              <ul className="mt-6 max-w-3xl space-y-2.5 text-sm leading-relaxed text-muted-foreground">
+                {job.highlights.map((item) => (
+                  <li key={item} className="grid grid-cols-[1.25rem_minmax(0,1fr)]">
+                    <span aria-hidden className="text-subtle-foreground">
+                      –
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 font-mono text-xs leading-relaxed text-subtle-foreground">
+                {job.stack.join(", ")}
+              </p>
+            </div>
+          </li>
+        ))}
 
-        <Separator className="mt-10" />
-        <p className="pt-6 text-sm text-muted-foreground">
-          <span className="font-mono text-xs uppercase tracking-[0.12em] text-brand">Education</span>
-          <span className="mx-2 text-border-strong" aria-hidden>
-            /
-          </span>
-          {education.map((e) => `${e.title}, ${e.org}, ${e.period}`).join("; ")}
-        </p>
-      </Card>
+        {education.map((e) => (
+          <li key={e.title} className="grid gap-x-8 gap-y-2 py-8 lg:grid-cols-12">
+            <p className="font-mono text-xs text-foreground lg:col-span-3">{e.period}</p>
+            <p className="text-sm text-muted-foreground lg:col-span-9">
+              <span className="text-foreground">{e.title}</span> · {e.org}
+            </p>
+          </li>
+        ))}
+      </ol>
     </HomeSection>
   );
 }

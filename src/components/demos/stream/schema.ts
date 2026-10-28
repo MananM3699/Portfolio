@@ -4,7 +4,7 @@ import { z } from "zod";
  * Contract for the structured `data` event. The payload arrives over the wire as
  * untyped JSON, so the chart only renders once it parses against this schema.
  */
-export const UnitsSchema = z.enum(["usd_k", "pct", "count"]);
+const UnitsSchema = z.enum(["usd_k", "pct", "count"]);
 export type Units = z.infer<typeof UnitsSchema>;
 
 const SeriesSchema = z.object({
@@ -39,7 +39,7 @@ const TableSchema = z
     path: ["rows"],
   });
 
-export const ChartPayloadSchema = z.object({
+const ChartPayloadSchema = z.object({
   chart: ChartSchema,
   table: TableSchema.optional(),
 });
@@ -47,7 +47,7 @@ export const ChartPayloadSchema = z.object({
 export type ChartPayload = z.infer<typeof ChartPayloadSchema>;
 export type ChartSpec = ChartPayload["chart"];
 
-export type ParseResult =
+type ParseResult =
   | { ok: true; payload: ChartPayload }
   | { ok: false; reason: string };
 

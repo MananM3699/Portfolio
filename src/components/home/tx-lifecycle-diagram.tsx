@@ -1,6 +1,6 @@
 /**
  * Static state machine for a wallet transaction. Colours come only from theme
- * tokens (fill-* / stroke-* utilities), so it follows light and dark mode.
+ * tokens (fill-* / stroke-* utilities).
  */
 
 type Node = { id: string; x: number; y: number; label: string; note?: string; terminal?: boolean };
@@ -155,11 +155,11 @@ function StateNode({ node, height }: { node: Node; height: number }) {
         y={node.y}
         width={W}
         height={height}
-        rx={8}
+        rx={2}
         className={
           node.terminal
-            ? "fill-background/80 stroke-foreground/70"
-            : "fill-background/55 stroke-border-strong"
+            ? "fill-card stroke-foreground"
+            : "fill-transparent stroke-border-strong"
         }
         strokeWidth={node.terminal ? 1.5 : 1}
       />
@@ -169,7 +169,7 @@ function StateNode({ node, height }: { node: Node; height: number }) {
           y={node.y + 3}
           width={W - 6}
           height={height - 6}
-          rx={6}
+          rx={1}
           fill="none"
           className="stroke-foreground/25"
           strokeWidth={1}

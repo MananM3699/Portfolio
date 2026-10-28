@@ -4,7 +4,7 @@ import { useId, type ComponentType } from "react";
 import { BarChart3, CalendarDays, ChevronDown, Clock, Lock, Plane, Wallet, X, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { initials } from "../model/format";
 import { getRoute, routes, type RouteId } from "../model/permissions";
 import { Can, Forbidden, usePermission, useViewer } from "../guard";
@@ -51,7 +51,7 @@ export function AppShell() {
         <span className="font-semibold tracking-tight text-foreground">
           HR<span className="text-brand">MS</span>
         </span>
-        <div className="glass-subtle relative order-last flex h-8 min-w-0 flex-1 basis-full items-center rounded-lg pl-3 font-mono @md:order-none @md:basis-0 text-xs transition-colors focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50">
+        <div className="border border-border bg-surface relative order-last flex h-8 min-w-0 flex-1 basis-full items-center rounded-lg pl-3 font-mono @md:order-none @md:basis-0 text-xs transition-colors focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50">
           <label htmlFor={addressId} className="shrink-0 text-subtle-foreground">
             hrms.app
             <span className="sr-only"> address, try a deep link</span>

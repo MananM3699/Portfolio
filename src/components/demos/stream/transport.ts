@@ -8,7 +8,7 @@
 import type { Emitter } from "./emitter";
 import type { Fixture } from "./fixtures";
 
-export type StreamEvent =
+type StreamEvent =
   | { type: "token"; text: string }
   | { type: "data"; payload: unknown }
   | { type: "done" }

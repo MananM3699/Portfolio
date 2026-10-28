@@ -1,13 +1,13 @@
 "use client";
 
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import type { LeaveStatus } from "../model/contracts";
 import { LEAVE_LIST, tagLabel } from "../store/api";
 import { useVisibleLeave } from "./leave-page";
 import { ErrorNote, PageHeader, RefetchBadge, SkeletonBar } from "./ui";
 
 const tileClass =
-  "glass-subtle rounded-xl p-3.5 transition-[translate,border-color] duration-200 hover:-translate-y-0.5 hover:border-border-strong";
+  "border border-border bg-surface rounded-md p-3.5 transition-[translate,border-color] duration-200 hover:-translate-y-0.5 hover:border-border-strong";
 
 const tiles: { status: LeaveStatus; label: string; tone: string }[] = [
   { status: "pending", label: "Pending", tone: "text-warning" },

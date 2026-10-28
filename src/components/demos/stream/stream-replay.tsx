@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Chip } from "@/components/ui/primitives";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { StreamChart } from "./chart";
 import { fixtures, getFixture } from "./fixtures";
 import { useReplay, type Phase, type ReplayState } from "./use-replay";
@@ -21,9 +21,9 @@ const phaseBadge: Record<Phase, { label: string; className: string }> = {
   error: { label: "failed", className: "border-danger/25 bg-danger-soft text-danger" },
 };
 
-/** Small glass action button used for Stop / Regenerate / Retry. */
+/** Small border border-border bg-card action button used for Stop / Regenerate / Retry. */
 const actionButton =
-  "glass-subtle h-8 gap-1.5 rounded-lg border-border! px-3 text-xs text-foreground transition-[background-color,color,translate] duration-150 hover:border-border-strong! hover:bg-card hover:text-foreground";
+  "border border-border bg-surface h-8 gap-1.5 rounded-lg border-border! px-3 text-xs text-foreground transition-[background-color,color,translate] duration-150 hover:border-border-strong! hover:bg-card hover:text-foreground";
 
 /**
  * SolBI streaming replay: a recorded natural-language BI answer played back through
@@ -74,7 +74,7 @@ export function StreamReplay() {
                   value={fixture.id}
                   onClick={() => ask(fixture.id)}
                   className={cn(
-                    "glass-subtle h-auto min-h-9 shrink rounded-full border-border! px-3.5 py-1.5 text-left font-normal whitespace-normal text-muted-foreground",
+                    "border border-border bg-surface h-auto min-h-9 shrink rounded-full border-border! px-3.5 py-1.5 text-left font-normal whitespace-normal text-muted-foreground",
                     "transition-[background-color,color,border-color,translate] duration-150 hover:-translate-y-px hover:border-border-strong! hover:bg-card hover:text-foreground",
                     "data-[state=on]:border-brand/45! data-[state=on]:bg-brand-soft data-[state=on]:text-brand data-[state=on]:hover:bg-brand-soft",
                   )}
@@ -94,7 +94,7 @@ export function StreamReplay() {
           </ToggleGroup>
         </div>
 
-        <div className="glass-subtle flex items-center gap-2 rounded-xl border-border! py-1.5 pr-1.5 pl-3.5 transition-shadow duration-150 has-[input:focus-visible]:border-ring! has-[input:focus-visible]:ring-3 has-[input:focus-visible]:ring-ring/40">
+        <div className="border border-border bg-surface flex items-center gap-2 rounded-md border-border! py-1.5 pr-1.5 pl-3.5 transition-shadow duration-150 has-[input:focus-visible]:border-ring! has-[input:focus-visible]:ring-3 has-[input:focus-visible]:ring-ring/40">
           <Sparkles className="size-4 shrink-0 text-brand" aria-hidden />
           <label htmlFor={inputId} className="sr-only">
             Question (read-only in this replay)
@@ -126,7 +126,7 @@ export function StreamReplay() {
           </Button>
         </div>
 
-        <section aria-label="Answer" aria-busy={streaming} className="glass-subtle overflow-hidden rounded-xl border-border!">
+        <section aria-label="Answer" aria-busy={streaming} className="border border-border bg-surface overflow-hidden rounded-md border-border!">
           <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-2.5">
             <p className="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-subtle-foreground">Answer</p>
             <Badge variant="outline" className={cn("h-6 rounded-md px-2 font-mono text-[0.72rem] font-normal", badge.className)}>
@@ -218,7 +218,7 @@ function AnswerBody({ state, onRetry }: { state: ReplayState; onRetry: () => voi
       )}
 
       {chart.status === "pending" && phase === "streaming" && (
-        <div className="flex h-24 items-center justify-center rounded-xl border border-dashed border-border-strong bg-muted/50 px-4 text-center font-mono text-[0.7rem] text-subtle-foreground">
+        <div className="flex h-24 items-center justify-center rounded-md border border-dashed border-border-strong bg-muted/50 px-4 text-center font-mono text-[0.7rem] text-subtle-foreground">
           awaiting data event · chart renders after validation
         </div>
       )}

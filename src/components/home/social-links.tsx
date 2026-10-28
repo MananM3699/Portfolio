@@ -1,37 +1,22 @@
-import { Github, Linkedin, Phone } from "lucide-react";
-import { buttonClass } from "@/components/ui/primitives";
 import { profile } from "@/content/site";
 
-/** Phone and LinkedIn always; GitHub only when profile.github is set. */
-export function SocialLinks() {
+const link =
+  "font-mono text-sm text-muted-foreground underline decoration-border-strong underline-offset-4 transition-colors hover:text-brand hover:decoration-brand";
+
+/** Phone and LinkedIn always; GitHub only when profile.github is set. Plain text links. */
+export function SocialLinks({ className }: { className?: string }) {
   const github: string = profile.github;
   return (
     <>
-      <a href={profile.phoneHref} className={buttonClass("ghost", "h-9 px-3 font-mono text-[0.8rem]")}>
-        <Phone className="size-4" aria-hidden />
-        <span className="sr-only">Call </span>
+      <a href={profile.phoneHref} className={className ?? link}>
         {profile.phone}
       </a>
-      <a
-        href={profile.linkedin}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={buttonClass("ghost", "h-9 px-3")}
-      >
-        <Linkedin className="size-4" aria-hidden />
-        LinkedIn
-        <span className="sr-only">(opens in a new tab)</span>
+      <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className={className ?? link}>
+        LinkedIn<span className="sr-only"> (opens in a new tab)</span>
       </a>
       {github && (
-        <a
-          href={github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={buttonClass("ghost", "h-9 px-3")}
-        >
-          <Github className="size-4" aria-hidden />
-          GitHub
-          <span className="sr-only">(opens in a new tab)</span>
+        <a href={github} target="_blank" rel="noopener noreferrer" className={className ?? link}>
+          GitHub<span className="sr-only"> (opens in a new tab)</span>
         </a>
       )}
     </>

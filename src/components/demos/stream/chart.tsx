@@ -4,14 +4,14 @@ import { useEffect, useId, useState, type KeyboardEvent, type PointerEvent, type
 import { ChartColumn, Table2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import type { ChartPayload, ChartSpec, Units } from "./schema";
 
 /* ---------- formatting ---------- */
 
 const integer = new Intl.NumberFormat("en-US");
 
-export function formatValue(value: number, units: Units): string {
+function formatValue(value: number, units: Units): string {
   switch (units) {
     case "usd_k":
       return Math.abs(value) >= 1000 ? `$${(value / 1000).toFixed(2)}M` : `$${integer.format(value)}k`;
@@ -108,7 +108,7 @@ export function StreamChart({ payload }: { payload: ChartPayload }) {
   const id = useId();
 
   return (
-    <div className="glass-subtle space-y-3 rounded-xl border-border! p-3 sm:p-4">
+    <div className="border border-border bg-surface space-y-3 rounded-md border-border! p-3 sm:p-4">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0">
           <p id={`${id}-title`} className="text-sm font-medium text-foreground">
@@ -213,7 +213,6 @@ function Plot({ chart, labelledBy }: { chart: ChartSpec; labelledBy: string }) {
   const [measure, width] = useElementWidth<HTMLDivElement>();
   const [active, setActive] = useState<number | null>(null);
   const descId = useId();
-  const gradientId = `bar-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const summary = describe(chart);
 
   const values = chart.series[0].values;
@@ -297,21 +296,6 @@ function Plot({ chart, labelledBy }: { chart: ChartSpec; labelledBy: string }) {
       {width > 0 && (
         <svg width={width} height={HEIGHT} role="img" aria-label={summary} className="block overflow-visible">
           <title>{summary}</title>
-          <defs>
-            {/* Brand fades toward the baseline; negative bars fade toward the baseline too. */}
-            <linearGradient id={`${gradientId}-pos`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" style={{ stopColor: "var(--brand)", stopOpacity: 1 }} />
-              <stop offset="100%" style={{ stopColor: "var(--brand)", stopOpacity: 0.55 }} />
-            </linearGradient>
-            <linearGradient id={`${gradientId}-neg`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" style={{ stopColor: "var(--danger)", stopOpacity: 0.55 }} />
-              <stop offset="100%" style={{ stopColor: "var(--danger)", stopOpacity: 1 }} />
-            </linearGradient>
-            <linearGradient id={`${gradientId}-area`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" style={{ stopColor: "var(--brand)", stopOpacity: 0.24 }} />
-              <stop offset="100%" style={{ stopColor: "var(--brand)", stopOpacity: 0 }} />
-            </linearGradient>
-          </defs>
 
           {/* Gridlines and y ticks */}
           {ticks.map((t) => (
@@ -365,7 +349,7 @@ function Plot({ chart, labelledBy }: { chart: ChartSpec; labelledBy: string }) {
                 <g key={chart.labels[i]}>
                   <path
                     d={barPath(x, barWidth, baseline, end)}
-                    fill={`url(#${gradientId}-${v < 0 ? "neg" : "pos"})`}
+                    fill={v < 0 ? "var(--danger)" : "var(--brand)"}
                     className="transition-opacity duration-150"
                     opacity={dimmed ? 0.4 : 1}
                   />
@@ -382,7 +366,7 @@ function Plot({ chart, labelledBy }: { chart: ChartSpec; labelledBy: string }) {
             })
           ) : (
             <g>
-              <path d={areaPath} fill={`url(#${gradientId}-area)`} />
+              <path d={areaPath} fill="var(--brand)" fillOpacity={0.1} />
               <path
                 d={linePath}
                 fill="none"
@@ -440,7 +424,7 @@ function Plot({ chart, labelledBy }: { chart: ChartSpec; labelledBy: string }) {
       {active !== null && width > 0 && (
         <div
           aria-hidden
-          className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full rounded-lg border border-border-strong bg-popover px-2.5 py-1.5 shadow-lg backdrop-blur-md"
+          className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full rounded-lg border border-border-strong bg-popover px-2.5 py-1.5"
           style={{ left: tooltipLeft, top: tooltipTop }}
         >
           <p className="font-mono text-xs font-semibold tabular-nums text-foreground">

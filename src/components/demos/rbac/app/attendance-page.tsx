@@ -1,7 +1,7 @@
 "use client";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import type { TeamWeek } from "../model/contracts";
 import { formatDay } from "../model/format";
 import { ATTENDANCE_WEEK, tagLabel, useGetTeamWeekQuery } from "../store/api";

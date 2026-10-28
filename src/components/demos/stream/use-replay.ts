@@ -15,12 +15,12 @@ import {
 
 export type Phase = "idle" | "streaming" | "done" | "stopped" | "error";
 
-export type ChartState =
+type ChartState =
   | { status: "pending" }
   | { status: "ready"; payload: ChartPayload }
   | { status: "invalid"; reason: string };
 
-export type Stats = {
+type Stats = {
   lastEvent: StreamEventType | "abort" | null;
   chunks: number;
   /** React commits caused by token flushes; compare with `chunks`. */
@@ -132,7 +132,7 @@ function subscribeToMotion(onChange: () => void) {
   return () => query.removeEventListener("change", onChange);
 }
 
-export function usePrefersReducedMotion(): boolean {
+function usePrefersReducedMotion(): boolean {
   return useSyncExternalStore(
     subscribeToMotion,
     () => window.matchMedia(motionQuery).matches,

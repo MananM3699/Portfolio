@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 /*
  * Small SVG building blocks shared by the case-study diagrams.
  * Colours come only from design tokens (Tailwind fill-/stroke- token classes), so both themes
- * work without hard-coded hex values. On the glass figure: nodes fill with --card, edges use
+ * work without hard-coded hex values. Nodes fill with --card, edges use
  * --border-strong, and anything the page's demo shows live uses --brand.
  */
 

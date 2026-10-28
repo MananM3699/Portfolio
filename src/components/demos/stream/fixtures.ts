@@ -3,7 +3,7 @@
  * is a made-up retailer and every number is mock data.
  */
 
-export type Chunk = { text: string; delayMs: number };
+type Chunk = { text: string; delayMs: number };
 
 export type QuestionId = "revenue-by-region" | "declining-lines" | "repeat-orders";
 

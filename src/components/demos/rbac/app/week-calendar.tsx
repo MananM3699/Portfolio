@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Toggle } from "@/components/ui/toggle";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import type { Shift, TeamWeek } from "../model/contracts";
 import { formatDay, leaveTypeLabel } from "../model/format";
 import { tagLabel, ATTENDANCE_WEEK, useGetTeamWeekQuery } from "../store/api";
@@ -56,7 +56,7 @@ export function WeekCalendar({ title = "This week" }: { title?: string }) {
       </div>
 
       {isError && <ErrorNote>Couldn&apos;t load the week.</ErrorNote>}
-      <div className="glass-subtle relative overflow-x-auto rounded-xl">
+      <div className="border border-border bg-surface relative overflow-x-auto rounded-md">
         {isLoading || !data ? (
           <CalendarSkeleton />
         ) : (

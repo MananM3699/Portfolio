@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Check, Download, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import type { LeaveRequest } from "../model/contracts";
 import { formatRange, leaveTypeLabel, toCsv } from "../model/format";
 import { Can, GuardedButton, usePermission, useViewer } from "../guard";

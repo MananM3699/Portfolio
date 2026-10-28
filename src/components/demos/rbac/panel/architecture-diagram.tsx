@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { getRoute } from "../model/permissions";
 import { LATENCY_MS } from "../model/fake-db";
 import type { ActivityEntry, ActivityKind } from "../store/activity-slice";
@@ -132,7 +132,7 @@ export function ArchitectureDiagram() {
         <h4 className="text-sm font-medium text-foreground">Request path</h4>
         <p className="text-xs text-muted-foreground">Lights up as the store events above happen.</p>
       </div>
-      <div className="glass-subtle rounded-xl p-3">
+      <div className="border border-border bg-surface rounded-md p-3">
         <svg
           viewBox={`0 0 320 ${height}`}
           role="img"

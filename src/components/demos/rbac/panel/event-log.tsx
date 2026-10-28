@@ -3,7 +3,7 @@
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { cleared, type ActivityKind } from "../store/activity-slice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 
@@ -60,7 +60,7 @@ export function EventLog() {
       <div
         tabIndex={0}
         aria-label="Event log entries"
-        className="glass-subtle h-64 overflow-y-auto rounded-xl font-mono text-[0.68rem] leading-5"
+        className="border border-border bg-surface h-64 overflow-y-auto rounded-md font-mono text-[0.68rem] leading-5"
       >
         {entries.length === 0 ? (
           <p className="px-3 py-2 text-muted-foreground">Switch roles or approve a request…</p>

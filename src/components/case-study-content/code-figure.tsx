@@ -1,5 +1,3 @@
-import { FileCode2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 
 /** Splits a leading `// file.ts (note)` comment off the snippet so it can sit in the header bar. */
 function splitHeader(code: string) {
@@ -11,8 +9,8 @@ function splitHeader(code: string) {
 }
 
 /**
- * A short, illustrative code excerpt on a frosted tile with a file header bar. Every snippet
- * on the case-study pages is rewritten with fictional names; none of it is production code.
+ * A short, illustrative code excerpt: flat panel with a thin file bar. Every snippet on the
+ * case-study pages is rewritten with fictional names; none of it is production code.
  */
 export function CodeFigure({
   code,
@@ -27,23 +25,11 @@ export function CodeFigure({
   const { file, note, body } = splitHeader(code);
   return (
     <figure className="max-w-[68ch]">
-      <div className="glass-subtle overflow-hidden rounded-2xl backdrop-blur-md">
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 border-b border-border bg-muted/60 px-4 py-2.5">
-          <FileCode2 className="size-3.5 shrink-0 text-brand" aria-hidden />
-          <span className="truncate font-mono text-xs font-medium text-foreground">
-            {file ?? label}
-          </span>
-          {note && (
-            <span className="font-mono text-xs text-muted-foreground">
-              ({note})
-            </span>
-          )}
-          <Badge
-            variant="outline"
-            className="ml-auto border-border-strong font-mono text-[0.65rem] font-normal text-muted-foreground"
-          >
-            illustrative
-          </Badge>
+      <div className="overflow-hidden rounded-md border border-border bg-surface">
+        <div className="flex flex-wrap items-center gap-x-3 border-b border-border px-4 py-2 font-mono text-[0.7rem] text-subtle-foreground">
+          <span className="text-foreground">{file ?? label}</span>
+          {note && <span>({note})</span>}
+          <span className="ml-auto">illustrative</span>
         </div>
         <pre
           tabIndex={0}
@@ -53,7 +39,7 @@ export function CodeFigure({
           <code>{body}</code>
         </pre>
       </div>
-      <figcaption className="mt-3 text-sm text-subtle-foreground">{caption}</figcaption>
+      <figcaption className="mt-3 font-mono text-xs text-subtle-foreground">{caption}</figcaption>
     </figure>
   );
 }
