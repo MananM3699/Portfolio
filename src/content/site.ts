@@ -34,10 +34,10 @@ export const about =
 
 export const quickFacts = [
   `${profile.role} @ ${profile.company}`,
-  "5+ years · intern → senior",
-  "React + TypeScript, Node + MongoDB",
+  "5+ years of experience",
+  "React + TypeScript, Express + MongoDB",
   "B.E., Neotech Technical Campus (GTU)",
-  `${profile.location} · IST · remote`,
+  profile.location,
 ] as const;
 
 // Shown on /contact. Keep it to what you'd actually say yes to.
