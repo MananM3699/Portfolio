@@ -15,6 +15,10 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/manan-mandaliya-8a1797197",
   // TODO: add a GitHub URL if you want it shown, or leave empty to hide it.
   github: "",
+  // Canonical origin used for metadata, sitemap and structured data. Set NEXT_PUBLIC_SITE_URL
+  // to the deployed domain (no trailing slash).
+  siteUrl:
+    process.env.NEXT_PUBLIC_SITE_URL || "https://manan-mandaliya.vercel.app",
   resumePath: "/manan-mandaliya-resume.pdf",
   // Portrait for the hero (file in /public). Empty = a monogram card is shown instead.
   photo: "/me.webp",
@@ -206,4 +210,38 @@ export const education = [
     org: "Neotech Technical Campus (GTU)",
     period: "2016 – 2020",
   },
+] as const;
+
+// Search keywords for <meta name="keywords"> and structured data.
+export const seoKeywords = [
+  "Manan Mandaliya",
+  "Senior Software Engineer",
+  "Senior Frontend Engineer",
+  "Full Stack Engineer",
+  "React Developer",
+  "TypeScript Developer",
+  "Next.js Developer",
+  "Node.js Developer",
+  "MongoDB",
+  "Redux Toolkit",
+  "RTK Query",
+  "Tailwind CSS",
+  "shadcn/ui",
+  "Frontend Architecture",
+  "Enterprise SaaS",
+  "HRMS",
+  "Web3 Developer",
+  "Solidity",
+  "Freelance Frontend Developer",
+  "Software Engineer Vadodara",
+  "Software Engineer India",
+  "Portfolio",
+  "N8N",
+  "Agentic AI",
+  "AI Agent",
+  "AI Driven",
+  "LangGraph",
+  "Gemini",
+  "Mistral",
+  "Claude",
 ] as const;
