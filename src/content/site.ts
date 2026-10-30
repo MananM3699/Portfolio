@@ -12,7 +12,7 @@ export const profile = {
   email: "mandaliyamanan@gmail.com",
   phone: "+91 79845 70126",
   phoneHref: "tel:+917984570126",
-  linkedin: "https://www.linkedin.com/in/manan-mandaliya-8a1797197",
+  linkedin: "https://www.linkedin.com/in/manan-mandaliya",
   // TODO: add a GitHub URL if you want it shown, or leave empty to hide it.
   github: "",
   // Canonical origin used for metadata, sitemap and structured data. Set NEXT_PUBLIC_SITE_URL
